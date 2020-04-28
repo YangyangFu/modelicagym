@@ -1,7 +1,7 @@
-IMA_NAME = modelicagym
+IMA_NAME = dadrl
 
 COMMAND_RUN = docker run \
-	  --name mrl \
+	  --name c1 \
 	  --detach=false \
 	  -e DISPLAY=${DISPLAY} \
 	  -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -16,6 +16,9 @@ build:
 
 remove_image:
 	docker rmi ${IMA_NAME}
+
+push:
+	docker push ${IMA_NAME}:latest
 
 Run:
 	${COMMAND_RUN} \

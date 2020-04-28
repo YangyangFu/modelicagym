@@ -1,5 +1,5 @@
 exec docker run \
- 	  --name mrl_test \
+ 	  --name gym_test \
       --user=root \
 	  --detach=false \
 	  -e DISPLAY=${DISPLAY} \
@@ -8,9 +8,9 @@ exec docker run \
 	  -v `pwd`:/mnt/shared \
 	  -i \
       -t \
-	  modelicagym /bin/bash -c "cd /mnt/shared && python /mnt/shared/setup_test.py"
+	  dadrl /bin/bash -c "cd /mnt/shared && python /mnt/shared/setup_test.py"
 
-exec docker attach mrl_test
+exec docker attach gym_test
 	
 exit $
   

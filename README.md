@@ -1,5 +1,3 @@
-<img src="preview-image-alt.png" alt="modelicagym_logo"/>
-
 # ModelicaGym: Applying Reinforcement Learning to Modelica Models
 
 This *ModelicaGym* toolbox was developed to employ Reinforcement Learning (RL) for solving optimization and control tasks in Modelica models. The developed tool allows connecting models using Functional Mock-up Interface (FMI) to OpenAI Gym toolkit in order to exploit Modelica equation-based modelling and co-simulation together with RL algorithms as a functionality of the tools correspondingly. Thus, *ModelicaGym* facilitates fast and convenient development of RL algorithms and their comparison when solving optimal control problem for Modelica dynamic models. 
@@ -15,13 +13,15 @@ FMU is a functional model unit exported from one of the main Modelica tools, e.g
 Currently only FMU's exported in co-simulation mode are supported.
 * `gymalgs.rl` package for Reinforcement Learning algorithms compatible to OpenAI Gym environments.
 
-## Instalation
+## Installation
 Full instalation guide is available [here](https://github.com/ucuapps/modelicagym/blob/master/docs/install.md).
 
 You can test working environment by running 
 [./test_setup.py](https://github.com/ucuapps/modelicagym/blob/master/test/setup_test.py) script.
 
 You can install package itself by running `pip install git+https://github.com/ucuapps/modelicagym.git` (or `pip3 install git+https://github.com/ucuapps/modelicagym.git` if you have both python versions installed).
+
+You can install locally by running 'python -m pip install -e .' after directing yourself to the folder where 'setup.py' is located.
 
 ## Examples
 Examples of usage of both packages can be found in examples folder.
@@ -33,3 +33,4 @@ Corresponding FMU's can be found in the resources folder.
 
 * [cart_pole_q_learner.py](https://github.com/ucuapps/modelicagym/blob/master/examples/cart_pole_q_learner.py) 
 is an example of Q-learning algorithm application. Agent is trained on the Cart-pole environment simulated with an FMU. Its' integration is described in previous example.
+

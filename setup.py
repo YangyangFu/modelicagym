@@ -1,12 +1,9 @@
-from setuptools import setup
+import setuptools
 
-setup(
+setuptools.setup(
     name='modelicagym',
     version='1.0',
-    packages=['modelicagym.environment', 'modelicagym.gymalgs.rl'],
-    package_dir={
-        'modelicagym.gymalgs.rl': './gymalgs/rl'
-    },
+    packages=setuptools.find_packages(),
     url='github.com/ucuapps/modelicagym',
     license='GPL-3.0',
     author='Oleh Lukianykhin',

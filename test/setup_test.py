@@ -16,7 +16,7 @@ def test_pyfmi():
 	print("PyFMI is available and successfully simulating.")
 
 # set visualise=True requires the docker to render on X11 server, which is not available currently.
-def test_gym(visualize=False):
+def test_gym(visualize=True):
     import gym
     env = gym.make('CartPole-v0')
     env.reset()
@@ -27,7 +27,12 @@ def test_gym(visualize=False):
     env.close()
     print("OpenAI Gym is available and successfully working.")
 
-
+def test_modelicagym():
+    import modelicagym as mgym
+    #import cart_pole_q_learner
+    cart_pole_q_learner()
+    
 if __name__ == '__main__':
-    test_pyfmi()
-    test_gym()
+    #test_pyfmi()
+    #test_gym()
+    test_modelicagym()
