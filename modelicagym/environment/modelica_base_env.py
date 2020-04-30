@@ -260,4 +260,4 @@ class ModelicaMEEnv(ModelicaBaseEnv):
     Should be used as a superclass for all such environments.
     """
     def __init__(self, model_path, config, log_level):
-        super(ModelicaMEEnv).__init__(model_path, "ME", config, log_level)
+        super(ModelicaMEEnv,self).__init__(model_path, "ME", config, log_level)

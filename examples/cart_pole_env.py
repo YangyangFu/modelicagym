@@ -87,7 +87,7 @@ class CartPoleEnv:
         :return: next (resulting) state
         """
         action = self.force if action > 0 else -self.force
-        return super().step(action)
+        return super(CartPoleEnv,self).step(action)
 
     # This function was heavily inspired by OpenAI example:
     # https://github.com/openai/gym/blob/master/gym/envs/classic_control/cartpole.py
@@ -220,7 +220,7 @@ class JModelicaCSCartPoleEnv(CartPoleEnv, FMI2CSEnv):
             'positive_reward': positive_reward,
             'negative_reward': negative_reward
         }
-        super(JModelicaCSCartPoleEnv).__init__("ModelicaGym_CartPole_CS.fmu",
+        super(JModelicaCSCartPoleEnv,self).__init__("ModelicaGym_CartPole_CS.fmu",
                          config, log_level)
 
 
@@ -276,6 +276,6 @@ class DymolaCSCartPoleEnv(CartPoleEnv, FMI1CSEnv):
             'negative_reward': negative_reward
         }
         # loads FMU corresponding to the Modelica type required
-        super(DymolaCSCartPoleEnv).__init__("../resources/dymola/linux/ModelicaGym_CartPole.fmu",
+        super(DymolaCSCartPoleEnv,self).__init__("../resources/dymola/linux/ModelicaGym_CartPole.fmu",
                          config, log_level)
 
