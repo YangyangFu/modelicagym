@@ -22,7 +22,7 @@ NINETY_DEGREES_IN_RAD = (90 / 180) * math.pi
 TWELVE_DEGREES_IN_RAD = (12 / 180) * math.pi
 
 
-class CartPoleEnv(self):
+class CartPoleEnv(object):
     """
     Class extracting common logic for JModelica and Dymola environments for CartPole experiments.
     Allows to avoid code duplication.
