@@ -10,6 +10,8 @@ import math
 import numpy as np
 from gym import spaces
 from modelicagym.environment import FMI2CSEnv, FMI1CSEnv
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 
 logger = logging.getLogger(__name__)
 

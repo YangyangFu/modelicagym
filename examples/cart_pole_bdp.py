@@ -5,7 +5,8 @@ import gym
 import numpy as np
 import math
 import time
-
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 
 def cart_pole_train_bdp(cart_pole_env,
                         max_number_of_steps=500,
@@ -36,7 +37,7 @@ def cart_pole_train_bdp(cart_pole_env,
 
     x_bins = _get_bins(-2.4, 2.4, 10)
     x_dot_bins = _get_bins(-1, 1, 10)
-    phi_bins = _get_bins(78/180*math.pi, 102/180*math.pi, 10)
+    phi_bins = _get_bins(78./180*math.pi, 102./180*math.pi, 10)
     phi_dot_bins = _get_bins(-2, 2, 10)
 
     # learner = BayesianDynamicProgramming(dirichlet_param=1, reward_param=1, T=30, num_states=10**n_outputs,
@@ -128,7 +129,7 @@ def run_bdp_experiments(n_experiments=1,
                         visualize=False,
                         m_cart=10,
                         m_pole=1,
-                        theta_0=85/180*math.pi,
+                        theta_0=85./180*math.pi,
                         theta_dot_0=0,
                         time_step=0.05,
                         positive_reward=2,
