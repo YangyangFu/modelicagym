@@ -220,7 +220,7 @@ class JModelicaCSCartPoleEnv(CartPoleEnv, FMI2CSEnv):
             'positive_reward': positive_reward,
             'negative_reward': negative_reward
         }
-        super().__init__("../resources/jmodelica/linux/ModelicaGym_CartPole_CS.fmu",
+        super(CartPoleEnv,FMI2CSEnv).__init__("ModelicaGym_CartPole_CS.fmu",
                          config, log_level)
 
 
