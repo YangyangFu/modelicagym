@@ -220,7 +220,7 @@ class JModelicaCSCartPoleEnv(CartPoleEnv, FMI2CSEnv):
             'positive_reward': positive_reward,
             'negative_reward': negative_reward
         }
-        super(CartPoleEnv,FMI2CSEnv).__init__("ModelicaGym_CartPole_CS.fmu",
+        super(JModelicaCSCartPoleEnv).__init__("ModelicaGym_CartPole_CS.fmu",
                          config, log_level)
 
 
@@ -276,6 +276,6 @@ class DymolaCSCartPoleEnv(CartPoleEnv, FMI1CSEnv):
             'negative_reward': negative_reward
         }
         # loads FMU corresponding to the Modelica type required
-        super().__init__("../resources/dymola/linux/ModelicaGym_CartPole.fmu",
+        super(DymolaCSCartPoleEnv).__init__("../resources/dymola/linux/ModelicaGym_CartPole.fmu",
                          config, log_level)
 
