@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
+
 """
 Classic cart-pole example implemented with an FMU simulating a cart-pole system.
 Implementation inspired by OpenAI Gym examples:
@@ -10,8 +13,7 @@ import math
 import numpy as np
 from gym import spaces
 from modelicagym.environment import FMI2CSEnv, FMI1CSEnv
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
+
 
 logger = logging.getLogger(__name__)
 

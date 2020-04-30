@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 import logging
 import numpy as np
 import math
 from examples import run_bdp_experiments
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
+
 
 def run_experiment_with_result_files(folder,
                                      n_experiments,

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 import logging
 from gymalgs.rl import BDP
 import gym
 import numpy as np
 import math
 import time
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
+
 
 def cart_pole_train_bdp(cart_pole_env,
                         max_number_of_steps=500,
