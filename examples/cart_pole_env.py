@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Classic cart-pole example implemented with an FMU simulating a cart-pole system.
 Implementation inspired by OpenAI Gym examples:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 from gymalgs.rl import QLearner
 import gym
