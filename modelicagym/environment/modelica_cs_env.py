@@ -25,7 +25,7 @@ class ModelicaCSEnv(ModelicaBaseEnv):
         self.simulation_start_time = simulation_start_time
         self.fmi_version = fmi_version
         logger.setLevel(log_level)
-        super().__init__(model_path, "CS", config, log_level)
+        super(ModelicaCSEnv).__init__(model_path, "CS", config, log_level)
 
     def reset(self):
         """
@@ -69,7 +69,7 @@ class FMI1CSEnv(ModelicaCSEnv):
     """
 
     def __init__(self, model_path, config, log_level, simulation_start_time=0):
-        super().__init__(model_path, config, FMIStandardVersion.first, log_level,
+        super(FMI1CSEnv).__init__(model_path, config, FMIStandardVersion.first, log_level,
                          simulation_start_time=simulation_start_time)
 
 
@@ -83,5 +83,5 @@ class FMI2CSEnv(ModelicaCSEnv):
     Refer to the ModelicaBaseEnv docs for detailed instructions on own environment implementation.
     """
     def __init__(self, model_path, config, log_level, simulation_start_time=0):
-        super().__init__(model_path, config, FMIStandardVersion.second, log_level,
+        super(FMI2CSEnv).__init__(model_path, config, FMIStandardVersion.second, log_level,
                          simulation_start_time=simulation_start_time)
