@@ -87,7 +87,7 @@ class CartPoleEnv:
         :return: next (resulting) state
         """
         action = self.force if action > 0 else -self.force
-        return super(CartPoleEnv,self).step(action)
+        return super().step(action)
 
     # This function was heavily inspired by OpenAI example:
     # https://github.com/openai/gym/blob/master/gym/envs/classic_control/cartpole.py
