@@ -42,13 +42,13 @@ class ModelicaCSEnv(ModelicaBaseEnv):
 
         self.model.reset()
         if self.fmi_version == FMIStandardVersion.second:
-            self.model.setup_experiment(start_time=0)
+            self.model.setup_experiment(start_time=self.simulation_start_time)
 
         self._set_init_parameter()
         self.model.initialize()
 
         # get initial state of the model from the fmu
-        self.start = 0
+        self.start = self.simulation_start_time
         self.stop = self.simulation_start_time
         self.state = self.do_simulation()
 
