@@ -90,6 +90,9 @@ class ModelicaBaseEnv(gym.Env):
         self.model_output_names = config.get('model_output_names')
         self.model_parameters = config.get('model_parameters')
 
+        # Add filter to output specified outputs for saving simulation time
+        self.filter = config.get('filter')
+
         # initialize the model time and state
         self.start = 0
         self.stop = self.tau
@@ -215,8 +218,11 @@ class ModelicaBaseEnv(gym.Env):
 
         # PyFMI modelling options
         opts = self.model.simulate_options()
-        opts['ncp'] = 50
+        opts['ncp'] = 500.
         opts['initialize'] = False
+        if self.filter:
+            filter = list(self.model_input_names)+list(self.model_output_names)
+            opt['filter'] = filter
 
         result = self.model.simulate(start_time=self.start, final_time=self.stop, options=opts)
 
