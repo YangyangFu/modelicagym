@@ -222,7 +222,7 @@ class ModelicaBaseEnv(gym.Env):
         opts['initialize'] = False
         if self.filter:
             filter = list(self.model_input_names)+list(self.model_output_names)
-            opt['filter'] = filter
+            opts['filter'] = filter
 
         result = self.model.simulate(start_time=self.start, final_time=self.stop, options=opts)
 
