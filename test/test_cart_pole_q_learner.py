@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, unicode_literals
+'''This example is from https://github.com/ucuapps/modelicagym, and modified for python 2 and for docker implementation.
+'''
+from __future__ import print_function
 from __future__ import absolute_import, division
 
 import logging
-from gymalgs.rl import QLearner
+from q_learning import QLearner
 import gym
 import numpy as np
 import math
@@ -24,6 +26,7 @@ def cart_pole_train_qlearning(cart_pole_env, max_number_of_steps=500, n_episodes
 
     episode_lengths = np.array([])
 
+    #bins of observation space - state space
     x_bins = _get_bins(-2.4, 2.4, 10)
     x_dot_bins = _get_bins(-1, 1, 10)
     phi_bins = _get_bins(78/180*math.pi, 102/180*math.pi, 10)
@@ -155,23 +158,34 @@ def run_ql_experiments(n_experiments=1,
         'positive_reward': positive_reward,
         'negative_reward': negative_reward,
         'force': force,
-        'log_level': log_level,
-        'fmu_result_handling':'memory',
-        'fmu_result_ncp':100.
+        'log_level': log_level
     }
 
-    from gym.envs.registration import register
+#    from gym.envs.registration import register
+    import gym_cart_jmodelica
     env_name = "JModelicaCSCartPoleEnv-v0"
 
-    register(
-        id=env_name,
-        entry_point='examples:JModelicaCSCartPoleEnv',
-        kwargs=config
-    )
+#    register(
+#        id=env_name,
+#        entry_point='examples:JModelicaCSCartPoleEnv',
+#        kwargs=config
+#    )
     trained_agent_s =[]
     episodes_length_s = []
     exec_time_s = []
-    env = gym.make(env_name)
+    # env = gym.make(env, some_kwarg=your_vars)
+    # need find a way to update the configuration at one time
+    env = gym.make(env_name,
+        m_cart=m_cart,
+        m_pole=m_pole,
+        theta_0=theta_0,
+        theta_dot_0=theta_dot_0,
+        time_step=time_step,
+        positive_reward=positive_reward,
+        negative_reward=negative_reward,
+        force=force,
+        log_level=log_level)
+        
     for i in range(n_experiments):
         trained_agent, episodes_length, exec_time = cart_pole_train_qlearning(env,
                                                                               n_episodes=n_episodes,
@@ -183,15 +197,113 @@ def run_ql_experiments(n_experiments=1,
 
     env.close()
     # delete registered environment to avoid errors in future runs.
-    del gym.envs.registry.env_specs[env_name]
+    # del gym.envs.registry.env_specs[env_name]
     return trained_agent_s, episodes_length_s, exec_time_s
 
 
+#if __name__ == "__main__":
+#    _, episodes_lengths, exec_times = run_ql_experiments(visualize=True, log_level=logging.INFO)
+#    print("Experiment length {} s".format(exec_times[0]))
+#    print(u"Avg episode performance {} {} {}".format(episodes_lengths[0].mean(),
+#                                                     chr(177),  # plus minus sign
+#                                                     episodes_lengths[0].std()))
+#    print(u"Max episode performance {}".format(episodes_lengths[0].max()))
+#    print(u"All episodes performance {}".format(episodes_lengths))
+
+def run_experiment_with_result_files(folder,
+                                     n_experiments,
+                                     n_episodes,
+                                     visualize,
+                                     m_cart,
+                                     m_pole,
+                                     theta_0,
+                                     theta_dot_0,
+                                     time_step,
+                                     positive_reward,
+                                     negative_reward,
+                                     force,
+                                     log_level):
+    """
+    Runs experiments with the given configuration and writes episodes length of all experiment as one file
+    and execution times of experiments as another.
+    File names are composed from numerical experiment parameters
+    in the same order as in function definition.
+    Episodes length are written as 2d-array of shape (n_episodes, n_experiments):
+    i-th row - i-th episode, j-th column - j-th experiment.
+
+    Execution times are written as 1d-array of shape (n_experiments, ): j-th element - j-th experiment
+
+
+    :param folder: folder for experiment result files
+    :return: None
+    """
+    experiment_file_name_prefix = "{}/experiment_{}_{}_{}_{}_{:.0f}_{}_{}_{}_{}_{}_".format(
+        folder,
+        n_experiments,
+        n_episodes,
+        m_cart,
+        m_pole,
+        theta_0 * 180 / math.pi,
+        theta_dot_0,
+        time_step,
+        positive_reward,
+        negative_reward,
+        force
+    )
+    _, episodes_lengths, exec_times = run_ql_experiments(n_experiments=n_experiments,
+                                                         n_episodes=n_episodes,
+                                                         visualize=visualize,
+                                                         m_cart=m_cart,
+                                                         m_pole=m_pole,
+                                                         theta_0=theta_0,
+                                                         theta_dot_0=theta_dot_0,
+                                                         time_step=time_step,
+                                                         positive_reward=positive_reward,
+                                                         negative_reward=negative_reward,
+                                                         force=force,
+                                                         log_level=log_level)
+    print(episodes_lengths)
+    n =experiment_file_name_prefix + "episodes_lengths.csv"
+    X = np.transpose(episodes_lengths)
+    print(X.shape)
+    
+    np.savetxt(fname=experiment_file_name_prefix + "episodes_lengths.csv",
+               X=np.transpose(episodes_lengths),
+               delimiter=",",
+               fmt='%10.4f')
+    np.savetxt(fname=experiment_file_name_prefix + "exec_times.csv",
+               X=np.array(exec_times),
+               delimiter=",",
+               fmt='%10.4f')
+
+
+
+def reward_ratio_experiment(rws):
+    for pos_rew, neg_rew in rws:
+        run_experiment_with_result_files(folder,
+                                         n_experiments=1,
+                                         n_episodes=200,
+                                         visualize=False,
+                                         m_cart=10,
+                                         m_pole=1,
+                                         theta_0=85 / 180 * math.pi,
+                                         theta_dot_0=0,
+                                         time_step=0.05,
+                                         positive_reward=pos_rew,
+                                         negative_reward=neg_rew,
+                                         force=15,
+                                         log_level=logging.INFO)
+
+
 if __name__ == "__main__":
-    _, episodes_lengths, exec_times = run_ql_experiments(visualize=True, log_level=logging.INFO)
-    print("Experiment length {} s".format(exec_times[0]))
-    print(u"Avg episode performance {} {} {}".format(episodes_lengths[0].mean(),
-                                                     chr(177),  # plus minus sign
-                                                     episodes_lengths[0].std()))
-    print(u"Max episode performance {}".format(episodes_lengths[0].max()))
-    print(u"All episodes performance {}".format(episodes_lengths))
+    import time
+    import os
+    
+    start = time.time()
+    folder = "experiments_results"
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+    # following experiments rake significant amount of time, so it is advised to run only one of them at once
+    reward_ratio_experiment([[1, -100], [1, -50], [1, -200],])
+    end = time.time()
+    print("Total execution time {:.2f} seconds".format(end-start))
