@@ -99,6 +99,10 @@ class ModelicaBaseEnv(gym.Env):
         self.done = False
         self.state = self.reset()
 
+        # handling modelica fmu simulation results
+        self.fmu_result_handling = config.get('fmu_result_handling')
+        self.fmu_result_ncp = config.get('fmu_result_ncp')
+
         # OpenAI Gym requirements
         self.action_space = self._get_action_space()
         self.observation_space = self._get_observation_space()
@@ -218,8 +222,9 @@ class ModelicaBaseEnv(gym.Env):
 
         # PyFMI modelling options
         opts = self.model.simulate_options()
-        opts['ncp'] = 500.
+        opts['ncp'] = float(self.fmu_result_ncp)
         opts['initialize'] = False
+        opts['result_handling']=self.fmu_result_handling
         if self.filter:
             filter = list(self.model_input_names)+list(self.model_output_names)
             opts['filter'] = filter

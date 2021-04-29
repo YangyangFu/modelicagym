@@ -1,4 +1,4 @@
-IMA_NAME = dadrl
+IMA_NAME = modelicagym
 
 COMMAND_RUN = docker run \
 	  --name c1 \

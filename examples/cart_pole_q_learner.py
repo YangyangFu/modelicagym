@@ -155,7 +155,9 @@ def run_ql_experiments(n_experiments=1,
         'positive_reward': positive_reward,
         'negative_reward': negative_reward,
         'force': force,
-        'log_level': log_level
+        'log_level': log_level,
+        'fmu_result_handling':'memory',
+        'fmu_result_ncp':100.
     }
 
     from gym.envs.registration import register
