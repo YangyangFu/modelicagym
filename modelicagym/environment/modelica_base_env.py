@@ -66,6 +66,9 @@ class ModelicaBaseEnv(gym.Env):
             positive_reward - (optional) positive reward for default reward policy. Is returned when episode goes on.
             negative_reward - (optional) negative reward for default reward policy. Is returned when episode is ended
 
+            fmu_result_handling - fmu result saving method. 'memory' - write results to memeory only; 'file' - write results to a mat file.
+            fmu_result_ncp - CS-FMU result communication point
+            filter_flag - fmu result filter to save only filtered variables in the result file
         :param log_level: level of logging to be used
         """
 
@@ -91,7 +94,7 @@ class ModelicaBaseEnv(gym.Env):
         self.model_parameters = config.get('model_parameters')
 
         # Add filter to output specified outputs for saving simulation time
-        self.filter = config.get('filter')
+        self.filter_flag = config.get('filter_flag')
 
         # initialize the model time and state
         self.start = 0
@@ -101,7 +104,9 @@ class ModelicaBaseEnv(gym.Env):
 
         # handling modelica fmu simulation results
         self.fmu_result_handling = config.get('fmu_result_handling')
+        print self.fmu_result_handling 
         self.fmu_result_ncp = config.get('fmu_result_ncp')
+        print self.fmu_result_ncp 
 
         # OpenAI Gym requirements
         self.action_space = self._get_action_space()
@@ -225,7 +230,7 @@ class ModelicaBaseEnv(gym.Env):
         opts['ncp'] = float(self.fmu_result_ncp)
         opts['initialize'] = False
         opts['result_handling']=self.fmu_result_handling
-        if self.filter:
+        if self.filter_flag:
             filter = list(self.model_input_names)+list(self.model_output_names)
             opts['filter'] = filter
 
