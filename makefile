@@ -1,4 +1,5 @@
 IMA_NAME = modelicagym
+IMA_NAME_BASE = yangyangfu/jmodelica_py2_gym_base
 
 COMMAND_RUN = docker run \
 	  --name c1 \
@@ -13,6 +14,9 @@ COMMAND_RUN = docker run \
 
 build:
 	docker build --no-cache --rm -t ${IMA_NAME} .
+
+build_base:
+	docker build -f Dockerfile_base --no-cache --rm -t ${IMA_NAME_BASE} .
 
 remove_image:
 	docker rmi ${IMA_NAME}
