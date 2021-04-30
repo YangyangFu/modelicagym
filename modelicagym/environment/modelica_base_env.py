@@ -229,9 +229,9 @@ class ModelicaBaseEnv(gym.Env):
         print self.filter_flag
         # PyFMI modelling options
         opts = self.model.simulate_options()
-        opts['ncp'] = 100. if not self.fmu_result_ncp else float(self.fmu_result_ncp)
+        opts['ncp'] = 100. #if not self.fmu_result_ncp else float(self.fmu_result_ncp)
         opts['initialize'] = False
-        opts['result_handling']='memory' if not self.fmu_result_handling else self.fmu_result_handling
+        opts['result_handling']='memory' #if not self.fmu_result_handling else self.fmu_result_handling
         if self.filter_flag:
             filter = list(self.model_input_names)+list(self.model_output_names)
             opts['filter'] = filter
