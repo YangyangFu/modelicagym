@@ -96,17 +96,15 @@ class ModelicaBaseEnv(gym.Env):
         # Add filter to output specified outputs for saving simulation time
         self.filter_flag = config.get('filter_flag')
 
+        # handling modelica fmu simulation results
+        self.fmu_result_handling = config.get('fmu_result_handling')
+        self.fmu_result_ncp = config.get('fmu_result_ncp')
+        
         # initialize the model time and state
         self.start = 0
         self.stop = self.tau
         self.done = False
         self.state = self.reset()
-
-        # handling modelica fmu simulation results
-        #self.fmu_result_handling = config.get('fmu_result_handling')
-        #print self.fmu_result_handling 
-        #self.fmu_result_ncp = config.get('fmu_result_ncp')
-        #print self.fmu_result_ncp 
 
         # OpenAI Gym requirements
         self.action_space = self._get_action_space()
