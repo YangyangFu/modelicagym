@@ -66,7 +66,10 @@ class ModelicaBaseEnv(gym.Env):
             positive_reward - (optional) positive reward for default reward policy. Is returned when episode goes on.
             negative_reward - (optional) negative reward for default reward policy. Is returned when episode is ended
 
-            fmu_result_handling - fmu result saving method. 'memory' - write results to memeory only; 'file' - write results to a mat file.
+            fmu_result_handling - fmu result saving method. 
+                -'default' - write results to a mat file;
+                -'memory' - write results to memeory only; 
+                -'file' - write results to a txt file;
             fmu_result_ncp - CS-FMU result communication point
             filter_flag - fmu result filter to save only filtered variables in the result file
         :param log_level: level of logging to be used
@@ -222,14 +225,17 @@ class ModelicaBaseEnv(gym.Env):
         :return: resulting state of the environment.
         """
         logger.debug("Simulation started for time interval {}-{}".format(self.start, self.stop))
-        print "\n======================"
-        print dir(self)
-        print self.filter_flag
+
         # PyFMI modelling options
         opts = self.model.simulate_options()
         opts['ncp'] = float(self.fmu_result_ncp)
         opts['initialize'] = False
-        opts['result_handling'] = self.fmu_result_handling
+        # save result
+        if self.fmu_result_handling.upper() == "DEFAULT":
+            pass
+        else:
+            opts['result_handling'] = self.fmu_result_handling
+
         if self.filter_flag:
             filter = list(self.model_input_names)+list(self.model_output_names)
             opts['filter'] = filter
