@@ -224,7 +224,9 @@ class ModelicaBaseEnv(gym.Env):
         :return: resulting state of the environment.
         """
         logger.debug("Simulation started for time interval {}-{}".format(self.start, self.stop))
-
+        print "\n======================"
+        print dir(self)
+        print self.filter_flag
         # PyFMI modelling options
         opts = self.model.simulate_options()
         opts['ncp'] = float(self.fmu_result_ncp)
